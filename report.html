@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Рекорд победы 2017</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css"   rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery.min.js"></script>
+
+    <script>
+
+        function ss(data) {
+            var dd = JSON.parse(data);
+            var all = dd["all"];
+            var num = dd["num"];
+            var row;
+            $("#countrow").text("всего участников: "+all.length);
+            $("#sum").text("всего отжиманий: "+num);
+            for (row in all)
+            {
+                var tmp = all[row];
+                $("#lst").append(
+                "\<div class=\"row list-group-item \"\>"+
+                "\<div class=\"col-lg-2\"\>"+tmp["num"]+"\<\/div\>"+
+                "\<div class=\"col-lg-3\"\>"+tmp["fio"]+"\<\/div\>"+
+                "\<div class=\"col-lg-2\"\>"+tmp["age"]+"</div>"+
+                "\<div class=\"col-lg-2\"\>"+tmp["max"]+"\<\/div\>" +
+                "\<div class=\"col-lg-2\"\>"+tmp["sum"]+"/"+tmp["N"]+"\<\/div\>"+
+                "\<\/div\>"
+
+                )
+            }
+        }
+
+        function getdata() {
+            $.ajax({
+                url: "php/stat.php",
+                method: "POST",
+                data:   ( { update : -1} ),
+                success: ss
+            });
+        }
+        $(document).ready(function () {
+            getdata();
+        });
+
+    </script>
+</head>
+
+<body>
+
+<div id = "lst" class="container">
+    <div class="h1 row page-header">
+        <div id="countrow" class="col-lg-6">участников</div>
+        <div id="sum" class="col-lg-6">всего отжиманий</div>
+    </div>
+    <div id = "headtable" class="row list-group-item">
+        <div class="col-lg-2">номер</div>
+        <div class="col-lg-3">ФИО</div>
+        <div class="col-lg-2">возраст</div>
+        <div class="col-lg-2">лучший подход</div>
+        <div class="col-lg-2">всего за несколько подходов</div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+</body>
+</html>

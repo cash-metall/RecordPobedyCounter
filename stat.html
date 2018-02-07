@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Рекорд победы 2017</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css"   rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/jquery.min.js"></script>
+
+    <script>
+
+        function ss(data) {
+            var dd = JSON.parse(data);
+            $("#mai").text (dd['num'].toString());
+            var ost = 26298-dd['num'];
+            if (ost>0) {
+                $("#ost").text('осталось: ' + ost);
+            } else {
+                $("#ost").text('Рекорд Победы завершен!');
+            }
+        }
+
+        function getdata() {
+            $.ajax({
+                url: "php/stat.php",
+                method: "POST",
+                data:   ( { update : 1} ),
+                success: ss
+            });
+        }
+        $(document).ready(function () {
+            getdata();
+            setInterval('getdata()',1000);
+        });
+
+    </script>
+</head>
+
+<body>
+
+<div class="container form-group">
+
+    <div align="center"><img src="image/bg-header.png" class="img-responsive"></div>
+    <div class="h1" align="center">#рекордпобеды</div>
+    <div id="mai" class="h1  mainnumber" align="center">26298</div>
+</div>
+
+<div id="footer">
+    <div class="row">
+        <div class="col-md-6">
+            <p id="ost" class="h1 ostatok" align="center">осталось: 26298</p>
+        </div>
+        <div class="col-md-6">
+            <p class="h1 target" align="center">цель: 26298</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+</body>
+</html>
